@@ -3,10 +3,11 @@ library(stringr)
 library(tidytext)
 library(tidyr)
 library(dplyr)
-annals.data <-
+
+annals.data.raw <-
   read.csv("~/RStudio Files/packageussh/ussher/ussher/data-raw/UssherTextPreclean4.csv", stringsAsFactors = FALSE, skip = 11,sep=";")
-annals.data <- as_tibble(annals.data)
-annals.data.na1 <- annals.data %>% dplyr::na_if("AgeBlank") %>% dplyr::na_if("DateBlank")
+annals.data.raw <- as_tibble(annals.data.raw)
+annals.data.na1 <- annals.data.raw %>% dplyr::na_if("AgeBlank") %>% dplyr::na_if("DateBlank")
 annals.data.fill1 <- annals.data.na1 %>% fill(Epoch) %>% fill(Dating)
 annals.index <- annals.data.fill1 %>%
   mutate(Index = as.numeric(str_extract(Event, "[0-9]+\\."))) %>%
