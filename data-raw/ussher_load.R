@@ -4,10 +4,10 @@ library(tidytext)
 library(tidyr)
 library(dplyr)
 
-annals.data.raw <-
+annals.data_raw <-
   read.csv("~/RStudio Files/packageussh/ussher/ussher/data-raw/UssherTextPreclean4.csv", stringsAsFactors = FALSE, skip = 11,sep=";")
-annals.data.raw <- as_tibble(annals.data.raw)
-annals.data.na1 <- annals.data.raw %>% dplyr::na_if("AgeBlank") %>% dplyr::na_if("DateBlank")
+annals.data_raw <- as_tibble(annals.data_raw)
+annals.data.na1 <- annals.data_raw %>% dplyr::na_if("AgeBlank") %>% dplyr::na_if("DateBlank")
 annals.data.fill1 <- annals.data.na1 %>% fill(Epoch) %>% fill(Dating)
 annals.index <- annals.data.fill1 %>%
   mutate(Index = as.numeric(str_extract(Event, "[0-9]+\\."))) %>%
@@ -25,6 +25,5 @@ ussh.ind <- annals.index %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Second Age of the World","2nd Age"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The First Age of the World","1st Age")))
 ussh.ind[ussh.ind == "character(0)" ] <- NA
-annals.data <- ussh.index
-usethis::use_data(annals.data, overwrite = TRUE)
-
+ussher <- ussh.ind
+usethis::use_data(ussher, overwrite = TRUE)
