@@ -13,6 +13,8 @@ annals.index <- annals.data.fill1 %>%
   mutate(Index = as.numeric(str_extract(Event, "[0-9]+\\."))) %>%
   mutate(TextSrc1 = as.character(str_extract_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]+"))) %>%
   mutate(BibBk1 = as.character(str_extract(TextSrc1, "[A-Z][a-z]+")))
+annals.index <- annals.index %>%
+  relocate(Index)
 ussh.ind <- annals.index %>%
   mutate(EventTxt=(str_replace_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]"," "))) %>%
   mutate(EventTxt=(str_replace_all(EventTxt, "[[:punct:]]"," "))) %>%
