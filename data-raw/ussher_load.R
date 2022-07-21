@@ -15,8 +15,9 @@ annals.index <- annals.data.fill1 %>%
   mutate(BibBk1 = as.character(str_extract(TextSrc1, "[A-Z][a-z]+"))) %>%
   mutate(Year = as.character(str_extract(Dating, "\\d{1,4}\\s([B][C]|[A][D])")))%>%
   mutate(AnnoMund = as.character(str_extract(Dating, "\\d{1,4}[a-z]*\\s[A][M]")))%>%
-  mutate(Season = as.character(str_extract(AnnoMund,"[a-z]")))
-
+  mutate(Season = as.character(str_extract(AnnoMund,"[a-z]")))%>%
+  mutate(SKing = as.character(str_extract(AnnoMund,"\\d{1,2}\\s[S][K]")))%>%
+  mutate(NKing = as.character(str_extract(AnnoMund,"\\d{1,2}\\s[N][K]")))
 annals.index <- annals.index %>%
   relocate(Index) %>%
   relocate(Year,.before = Event)%>%
@@ -29,6 +30,10 @@ ussh.ind <- annals.index %>%
   mutate(EventTxt=(str_replace_all(EventTxt, "[0-9]+"," "))) %>%
   mutate(AnnoMund=(str_replace_all(AnnoMund,"[a-z]",""))) %>%
   mutate(AnnoMund=(str_replace_all(AnnoMund,"[A][M]",""))) %>%
+  mutate(Season=(str_replace_all(Season,"[a]","Autumn"))) %>%
+  mutate(Season=(str_replace_all(Season,"[b]","Winter"))) %>%
+  mutate(Season=(str_replace_all(Season,"[c]","Spring"))) %>%
+  mutate(Season=(str_replace_all(Season,"[d]","Summer"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Seventh Age of the World","7th Age"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Sixth Age of the World","6th Age"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Fifth Age of the World","5th Age"))) %>%
