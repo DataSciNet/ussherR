@@ -12,7 +12,8 @@ annals.data.fill1 <- annals.data.na1 %>% fill(Epoch) %>% fill(Dating)
 annals.index <- annals.data.fill1 %>%
   mutate(Index = as.numeric(str_extract(Event, "[0-9]+\\."))) %>%
   mutate(TextSrc1 = as.character(str_extract_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]+"))) %>%
-  mutate(BibBk1 = as.character(str_extract(TextSrc1, "[A-Z][a-z]+")))
+  mutate(BibBk1 = as.character(str_extract(TextSrc1, "[A-Z][a-z]+"))) %>%
+  mutate(BC = as.character(str_extract(Dating, "\\d{1,4}\\s[BC]")))
 annals.index <- annals.index %>%
   relocate(Index)
 ussh.ind <- annals.index %>%
