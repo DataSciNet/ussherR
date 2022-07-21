@@ -13,13 +13,22 @@ annals.index <- annals.data.fill1 %>%
   mutate(Index = as.numeric(str_extract(Event, "[0-9]+\\."))) %>%
   mutate(TextSrc1 = as.character(str_extract_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]+"))) %>%
   mutate(BibBk1 = as.character(str_extract(TextSrc1, "[A-Z][a-z]+"))) %>%
-  mutate(BC = as.character(str_extract(Dating, "\\d{1,4}\\s[BC]")))
+  mutate(Year = as.character(str_extract(Dating, "\\d{1,4}\\s([B][C]|[A][D])")))%>%
+  mutate(AnnoMund = as.character(str_extract(Dating, "\\d{1,4}[a-z]*\\s[A][M]")))%>%
+  mutate(Season = as.character(str_extract(AnnoMund,"[a-z]")))
+
 annals.index <- annals.index %>%
-  relocate(Index)
+  relocate(Index) %>%
+  relocate(Year,.before = Event)%>%
+  relocate(AnnoMund) %>%
+  relocate(Season)
+
 ussh.ind <- annals.index %>%
   mutate(EventTxt=(str_replace_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]"," "))) %>%
   mutate(EventTxt=(str_replace_all(EventTxt, "[[:punct:]]"," "))) %>%
   mutate(EventTxt=(str_replace_all(EventTxt, "[0-9]+"," "))) %>%
+  mutate(AnnoMund=(str_replace_all(AnnoMund,"[a-z]",""))) %>%
+  mutate(AnnoMund=(str_replace_all(AnnoMund,"[A][M]",""))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Seventh Age of the World","7th Age"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Sixth Age of the World","6th Age"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Fifth Age of the World","5th Age"))) %>%
