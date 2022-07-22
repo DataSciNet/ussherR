@@ -16,20 +16,23 @@ annals.index <- annals.data.fill1 %>%
   mutate(Year = as.character(str_extract(Dating, "\\d{1,4}\\s([B][C]|[A][D])")))%>%
   mutate(AnnoMund = as.character(str_extract(Dating, "\\d{1,4}[a-z]*\\s[A][M]")))%>%
   mutate(Season = as.character(str_extract(AnnoMund,"[a-z]")))%>%
-  mutate(SKing = as.character(str_extract(AnnoMund,"\\d{1,2}\\s[S][K]")))%>%
-  mutate(NKing = as.character(str_extract(AnnoMund,"\\d{1,2}\\s[N][K]")))
+  mutate(SKing = as.character(str_extract(Dating,"\\d{1,2}\\s[S][K]")))%>%
+  mutate(NKing = as.character(str_extract(Dating,"\\d{1,2}\\s[N][K]"))) %>%
+  mutate(JulPer = as.character(str_extract(Dating,"\\d{1,4}\\s[J][P]")))
 annals.index <- annals.index %>%
   relocate(Index) %>%
   relocate(Year,.before = Event)%>%
   relocate(AnnoMund) %>%
-  relocate(Season)
+  relocate(Season) %>%
+  relocate(JulPer)
 
 ussh.ind <- annals.index %>%
   mutate(EventTxt=(str_replace_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]"," "))) %>%
   mutate(EventTxt=(str_replace_all(EventTxt, "[[:punct:]]"," "))) %>%
   mutate(EventTxt=(str_replace_all(EventTxt, "[0-9]+"," "))) %>%
-  mutate(AnnoMund=(str_replace_all(AnnoMund,"[a-z]",""))) %>%
-  mutate(AnnoMund=(str_replace_all(AnnoMund,"[A][M]",""))) %>%
+  mutate(AnnoMund=(str_remove_all(AnnoMund,"[a-z]"))) %>%
+  mutate(AnnoMund=(str_remove_all(AnnoMund,"[A][M]"))) %>%
+  mutate(JulPer=(str_remove_all(JulPer,"[J][P]"))) %>%
   mutate(Season=(str_replace_all(Season,"[a]","Autumn"))) %>%
   mutate(Season=(str_replace_all(Season,"[b]","Winter"))) %>%
   mutate(Season=(str_replace_all(Season,"[c]","Spring"))) %>%
@@ -41,6 +44,8 @@ ussh.ind <- annals.index %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Third Age of the World","3rd Age"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The Second Age of the World","2nd Age"))) %>%
   mutate(Epoch=(str_replace_all(Epoch,"The First Age of the World","1st Age")))
-ussh.ind[ussh.ind == "character(0)" ] <- NA
+ussh.ind$JulPer <-gsub(" $","",ussh.ind$JulPer,perl=T)
+ussh.ind$AnnoMund <-gsub(" $","",ussh.ind$AnnoMund,perl=T)
+ussh.ind[ussh.ind == "character(0)"] <- NA
 ussher <- ussh.ind
 usethis::use_data(ussher, overwrite = TRUE)
