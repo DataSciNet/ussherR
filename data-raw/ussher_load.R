@@ -13,7 +13,7 @@ annals.index <- annals.data.fill1 %>%
   mutate(Index = as.numeric(str_extract(Event, "[0-9]+\\."))) %>%
   mutate(TextSrc1 = as.character(str_extract_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]+"))) %>%
   mutate(BibBk1 = as.character(str_extract(TextSrc1, "[A-Z][a-z]+"))) %>%
-  mutate(Year = as.character(str_extract(Dating, "\\d{1,4}\\s([B][C]|[A][D])")))%>%
+  mutate(Year = as.character(str_extract(Dating, "\\d{1,4}\\s*([B][C]|[A][D])")))%>%
   mutate(AnnoMund = as.character(str_extract(Dating, "\\d{1,4}[a-z]*\\s[A][M]")))%>%
   mutate(Season = as.character(str_extract(AnnoMund,"[a-z]")))%>%
   mutate(SKing = as.character(str_extract(Dating,"\\d{1,2}\\s[S][K]")))%>%
@@ -45,10 +45,25 @@ ussh.ind <- annals.index %>%
   mutate(Epoch=(str_replace_all(Epoch,"The First Age of the World","1st Age")))
 ussh.ind$JulPer <-gsub(" $","",ussh.ind$JulPer,perl=T)
 ussh.ind$AnnoMund <-gsub(" $","",ussh.ind$AnnoMund,perl=T)
-ussh.ind[ussh.ind == "character(0)"] <- NA
+
 ussh.ind <- select(ussh.ind, -Event)
 ussh.ind <- ussh.ind  %>%
   relocate(EventTxt) %>%
   relocate(Index,.before=EventTxt)
+ussh.ind <- ussh.ind  %>%
+  mutate(BCnum=as.character(str_extract_all(Year,"\\d{1,4}\\s*[B][C]")))%>%
+  mutate(ADnum=as.character(str_extract_all(Year,"\\d{1,4}\\s*[A][D]"))) %>%
+  mutate(BCnum=(str_remove_all(BCnum,"[B][C]"))) %>%
+  mutate(ADnum=(str_remove_all(ADnum,"[A][D]")))
+ussh.ind[ussh.ind == "character(0)"] <- NA
+ussh.ind$BCnum <-gsub(" $","",ussh.ind$BCnum,perl=T)
+ussh.ind$ADnum <-gsub(" $","",ussh.ind$ADnum,perl=T)
+ussh.ind$BCnum <- as.numeric(as.character(ussh.ind$BCnum))*-1
+ussh.ind$ADnum <- as.numeric(as.character(ussh.ind$ADnum))
+ussh.ind <- ussh.ind %>%
+  mutate_at(vars(c("BCnum","ADnum")), ~replace_na(.,0))%>%
+  rowwise() %>%
+  mutate(BCAD = sum(c_across(BCnum:ADnum)))
+
 ussher <- ussh.ind
 usethis::use_data(ussher, overwrite = TRUE)
