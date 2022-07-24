@@ -70,11 +70,11 @@ ussh.ind <-select(ussh.ind, -c(Year, BCnum, ADnum))
 ussh.ind <- ussh.ind %>%
   rename(YearBCAD = BCAD) %>%
   relocate(YearBCAD,.after = EventTxt)
-ussh.raw <- annals.data_raw
-ussh.full <-ussh.ind
+usshraw <- annals.data_raw
+usshfull <-ussh.ind
 ussh.ind <- select(ussh.ind, -c(TextSrc1,SKing,NKing,Dating))
 
 ussher <- ussh.ind
-usethis::use_data(ussh.raw,overwrite=TRUE)
-usethis::use_data(ussh.full,overwrite=TRUE)
+usethis::use_data(usshraw,overwrite=TRUE)
+usethis::use_data(usshfull,overwrite=TRUE)
 usethis::use_data(ussher, overwrite = TRUE)

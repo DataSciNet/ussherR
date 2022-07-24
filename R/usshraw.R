@@ -1,0 +1,12 @@
+#' Raw original data directly drawn with fundamental cleaning from "Annals_djvu.txt" Archbishop James Ussher's chronology of ancient history known popularly as The Annals of the World (1658).
+#'
+#' "usshraw" file - Truncated listing of amalgamated data drawn from original chronological textual historic events are classified by index, year, epoch (or one of the 7 ancient "Ages of the World", Biblical source book if referenced (rarely), as well as alternate dating mechanisms, such as "Anno Mundi" (age of the world) or Julian Period. Additional file "ussh.full" includes variables that may be of further interest to historians, such as Southern Kingdom and Northern Kingdom discrepant dates, and the original amalgamated Dating mechanic used by Ussher in the original text. The raw data can also be called using "ussh.raw"
+#'
+#' @format A tibble with 5011 rows and 3 variables:
+#' \describe{
+#'   \item{Event}{chr Ussher's original historical paragraph, cleaned for text processing}
+#'   \item{Epoch}{chr denoting which of the 7 ancient "Ages of the World" the event falls into}
+#'   \item{Dating}{chr the original full-text string originally created by Ussher to identify, compare and harmonize the various dating methods in expressing the algorithms an historical analysis. All numeric date variables are drawn from this original date grouping}
+#' }
+#' @source \url{https://archive.org/stream/AnnalsOfTheWorld/Annals_djvu.txt}
+"usshraw"
