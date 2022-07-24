@@ -60,6 +60,8 @@ ussh.ind$BCnum <-gsub(" $","",ussh.ind$BCnum,perl=T)
 ussh.ind$ADnum <-gsub(" $","",ussh.ind$ADnum,perl=T)
 ussh.ind$BCnum <- as.numeric(as.character(ussh.ind$BCnum))*-1
 ussh.ind$ADnum <- as.numeric(as.character(ussh.ind$ADnum))
+ussh.ind$AnnoMund <- as.numeric(as.character(ussh.ind$AnnoMund))
+ussh.ind$JulPer <- as.numeric(as.character(ussh.ind$JulPer))
 ussh.ind <- ussh.ind %>%
   mutate_at(vars(c("BCnum","ADnum")), ~replace_na(.,0))%>%
   rowwise() %>%
@@ -73,4 +75,6 @@ ussh.full <-ussh.ind
 ussh.ind <- select(ussh.ind, -c(TextSrc1,SKing,NKing,Dating))
 
 ussher <- ussh.ind
+usethis::use_data(ussh.raw,overwrite=TRUE)
+usethis::use_data(ussh.full,overwrite=TRUE)
 usethis::use_data(ussher, overwrite = TRUE)
