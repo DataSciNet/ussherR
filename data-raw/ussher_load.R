@@ -13,7 +13,6 @@ annals.index <- annals.data.fill1 %>%
   mutate(Index = as.numeric(str_extract(Event, "[0-9]+\\."))) %>%
   mutate(TextSrc1 = as.character(str_extract_all(Event, "[A-Z][a-z]+ [0-9]+:[0-9]++-[0-9]+"))) %>%
   mutate(BibBk1 = as.character(str_extract(TextSrc1, "[A-Z][a-z]+"))) %>%
-  mutate(Dating=(str_replace_all(Dating,"[l]","1"))) %>%
   mutate(Year = as.character(str_extract(Dating, "\\d{1,4}\\s*([B][C]|[A][D])")))%>%
   mutate(AnnoMund = as.character(str_extract(Dating, "\\d{1,4}[a-z]*\\s[A][M]")))%>%
   mutate(Season = as.character(str_extract(AnnoMund,"[a-z]")))%>%
@@ -67,6 +66,11 @@ ussh.ind <- ussh.ind %>%
   mutate(BCAD = sum(c_across(BCnum:ADnum)))
 ussh.ind <-select(ussh.ind, -c(Year, BCnum, ADnum))
 ussh.ind <- ussh.ind %>%
-  rename(Year = BCAD)
+  rename(YearBCAD = BCAD) %>%
+  relocate(YearBCAD,.after = EventTxt)
+ussh.raw <- annals.data_raw
+ussh.full <-ussh.ind
+ussh.ind <- select(ussh.ind, -c(TextSrc1,SKing,NKing,Dating))
+
 ussher <- ussh.ind
 usethis::use_data(ussher, overwrite = TRUE)
