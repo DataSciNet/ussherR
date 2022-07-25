@@ -31,6 +31,10 @@ ussh.ind <- annals.index %>%
   mutate(Dating=(str_trim(Dating))) %>%
   mutate(AnnoMund=(str_remove_all(AnnoMund,"[a-z]"))) %>%
   mutate(AnnoMund=(str_remove_all(AnnoMund,"[A][M]"))) %>%
+  mutate(EventTxt=(str_remove_all(EventTxt,"AgeBlank"))) %>%
+  mutate(EventTxt=(str_remove_all(EventTxt,"ageblank"))) %>%
+  mutate(EventTxt=(str_remove_all(EventTxt,"DateBlank"))) %>%
+  mutate(EventTxt=(str_remove_all(EventTxt,"dateblank"))) %>%
   mutate(JulPer=(str_remove_all(JulPer,"[J][P]"))) %>%
   mutate(Season=(str_replace_all(Season,"[a]","Autumn"))) %>%
   mutate(Season=(str_replace_all(Season,"[b]","Winter"))) %>%
