@@ -1,6 +1,6 @@
 Package: ussher
 Title: Ussher Data Set Drawn from 1658 Chronology
-Version: 0.0.0.9000
+Version: 0.0.1.1000
 Authors@R: 
     person(given = "Daniel",
            family = "Eness",
