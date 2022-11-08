@@ -22,6 +22,6 @@ usshraw
 "usshraw" file - Truncated listing of amalgamated data drawn from original chronological textual historic events are classified by index, year, epoch (or one of the 7 ancient "Ages of the World", Biblical source book if referenced (rarely), as well as alternate dating mechanisms, such as "Anno Mundi" (age of the world) or Julian Period. Additional file "ussh.full" includes variables that may be of further interest to historians, such as Southern Kingdom and Northern Kingdom discrepant dates, and the original amalgamated Dating mechanic used by Ussher in the original text. The raw data can also be called using "ussh.raw"
 }
 \examples{
-data_summary(usshraw)
+summary(usshraw)
 }
 \keyword{datasets}

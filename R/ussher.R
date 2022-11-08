@@ -15,5 +15,5 @@
 #' }
 #' @source \url{https://archive.org/stream/AnnalsOfTheWorld/Annals_djvu.txt}
 #' @examples
-#' data_summary(ussher)
+#' summary(ussher)
 "ussher"
