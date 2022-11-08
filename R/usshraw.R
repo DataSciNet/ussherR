@@ -9,5 +9,7 @@
 #'   \item{Dating}{chr the original full-text string originally created by Ussher to identify, compare and harmonize the various dating methods in expressing the algorithms an historical analysis. All numeric date variables are drawn from this original date grouping}
 #' }
 #' @source \url{https://archive.org/stream/AnnalsOfTheWorld/Annals_djvu.txt}
+#' @examples
+#' data_summary(usshraw)
 "usshraw"
 
