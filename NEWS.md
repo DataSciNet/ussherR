@@ -1,3 +1,3 @@
-# ussher 0.0.1.1000
+# ussher 1.10
 
 * Added a `NEWS.md` file to track changes to the package.
