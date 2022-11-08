@@ -14,6 +14,4 @@
 #'   \item{JulPer}{dbl denoting Julian Period date. Julian Period was backdated to creation by Ussher, following its adoption by Caesar in 43 BC}
 #' }
 #' @source \url{https://archive.org/stream/AnnalsOfTheWorld/Annals_djvu.txt}
-#' @examples
-#' ussher
 "ussher"
